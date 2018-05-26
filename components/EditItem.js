@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from './Header';
 
-export default class NewItem extends React.Component {
+export default class EditItem extends React.Component {
 
     static navigationOptions = {
-        title: 'Add Item',
+        title: 'Eidt Item',
     };
 
     render() {
