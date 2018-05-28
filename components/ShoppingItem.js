@@ -2,20 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import * as ShoppingAPI from '../utils/ShoppingAPI';
+import EditItem from './EditItem';
 
 export default class ShoppingItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+
         }
     }
-
-    edit(id) {
-        alert("edit " + id);
-    }
-    
-    delete(){
+    delete() {
         ShoppingAPI.deleteItem(this.props.item.id).then(
             response => {
                 this.props.handleDeleteItem(this.props.item) //just to renew the data for frontend
@@ -25,12 +21,21 @@ export default class ShoppingItem extends React.Component {
         )
     }
 
-
     render() {
         return (
             <View style={styles.singleItem} >
                 <View style={styles.iconWrapper}>
-                    <Icon name='edit' onPress={this.edit.bind(this, this.props.item.id)} />
+                    <Icon name='edit' onPress={() => {
+                        // this.props.navigation.navigate('EditItem',
+                        // {
+                        //     id: this.props.item.id,
+                        //     name: this.props.item.name,
+                        //     quantity: this.props.item.quantity,
+                        //     des: this.props.item.des,
+                        // });
+
+                        this.props.navigation.navigate('EditItem').bind(this);
+                    }} />
                     <Icon name='delete' onPress={this.delete.bind(this, this.props.item.id)} />
                 </View>
                 <View style={styles.itemWrapper}>

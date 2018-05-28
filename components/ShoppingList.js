@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableHighlight } from 'react-native';
 import ShoppingItem from './ShoppingItem';
-import Header from './Header';
 import { Icon } from 'react-native-elements';
 import * as ShoppingAPI from '../utils/ShoppingAPI';
 
@@ -15,10 +14,6 @@ export default class ShoppingList extends React.Component {
     static navigationOptions = {
         title: 'My Shopping List',
     };
-
-    add() {
-        alert('add');
-    }
 
     deleteItem(item) {
         const recordIndex = this.state.items.indexOf(item);
@@ -34,7 +29,7 @@ export default class ShoppingList extends React.Component {
                 items: response.data
             }),
             error => this.setState({
-                error  //This is the same with error:error
+                error
             })
         )
     }
@@ -44,14 +39,9 @@ export default class ShoppingList extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    {/*<ShoppingItem
-                        imageUri="http://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg"
-                        title="this is title"
-                        content="content"
-                        number="5"
-                    />*/}
                     {items.map((item, i) =>
                         <ShoppingItem
+                            navigation={this.props.navigation}
                             key={item.id}
                             item={item}
                             handleEditItem={this.deleteItem.bind(this)}
@@ -66,18 +56,22 @@ export default class ShoppingList extends React.Component {
                         }} />
                     </TouchableHighlight>
                 </View>
+                <View style={styles.mapIconWrapper}>
+                    <TouchableHighlight style={styles.mapIcon}>
+                        <Icon color="#fff" name='map' onPress={() => {
+                            this.props.navigation.navigate('Map');
+                        }} />
+                    </TouchableHighlight>
+                </View>
             </View >
         );
     }
-
-
-
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 30,
+        marginTop: 5,
         backgroundColor: '#EBEAF1',
     },
     addItemButton: {
@@ -87,12 +81,29 @@ const styles = StyleSheet.create({
     },
     addIconWrapper: {
         flex: 1,
-        top: -10,
+        top: -40,
         alignSelf: 'flex-end',
         justifyContent: 'center',
         alignItems: 'center'
     },
     addIcon: {
+        backgroundColor: '#afafaf',
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 20
+    },
+
+    mapIconWrapper: {
+        flex: 1,
+        top: -40,
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    mapIcon: {
         backgroundColor: '#afafaf',
         width: 50,
         height: 50,
