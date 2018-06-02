@@ -27,11 +27,8 @@ export default class Item extends React.Component {
 
 const styles = StyleSheet.create({
     itemWrapper: {
-
     },
     itemTextInput: {
         height: 40,
     }
-
-
 });

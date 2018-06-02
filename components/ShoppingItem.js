@@ -11,6 +11,11 @@ export default class ShoppingItem extends React.Component {
 
         }
     }
+
+    edit(id) {
+        alert("edit " + id);
+    }
+
     delete() {
         ShoppingAPI.deleteItem(this.props.item.id).then(
             response => {
@@ -21,20 +26,26 @@ export default class ShoppingItem extends React.Component {
         )
     }
 
+    updateItem(){
+        this.props.handleUpdateItem();
+    }
+
     render() {
         return (
             <View style={styles.singleItem} >
                 <View style={styles.iconWrapper}>
                     <Icon name='edit' onPress={() => {
-                        // this.props.navigation.navigate('EditItem',
-                        // {
-                        //     id: this.props.item.id,
-                        //     name: this.props.item.name,
-                        //     quantity: this.props.item.quantity,
-                        //     des: this.props.item.des,
-                        // });
-
-                        this.props.navigation.navigate('EditItem').bind(this);
+                        this.props.navigation.navigate('EditItem',
+                        {
+                            id: this.props.item.id,
+                            name: this.props.item.name,
+                            quantity: this.props.item.quantity,
+                            des: this.props.item.des,
+                            image:  this.props.item.image,
+                            refresh: () => {
+                                this.updateItem();
+                            }
+                        });
                     }} />
                     <Icon name='delete' onPress={this.delete.bind(this, this.props.item.id)} />
                 </View>
@@ -46,7 +57,7 @@ export default class ShoppingItem extends React.Component {
                     <View style={styles.contentWrapper}>
                         <View style={styles.leaveOnEdge}>
                             <Text>{this.props.item.name}</Text>
-                            <Text> x{this.props.item.quantity}</Text>
+                            <Text style={styles.quantity}> x{this.props.item.quantity}</Text>
                         </View>
                         <Text>{this.props.item.des}</Text>
                     </View>
@@ -58,6 +69,7 @@ export default class ShoppingItem extends React.Component {
 
 const styles = StyleSheet.create({
     singleItem: {
+        flex:1,
         paddingTop: 10,
         height: 150,
         backgroundColor: '#ffffff',
@@ -70,12 +82,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     itemWrapper: {
+        flex: 1,
         flexDirection: 'row',
         paddingLeft: 10,
         paddingRight: 10,
     },
     contentWrapper: {
         paddingLeft: 10,
+        flex:1,
     },
     itemImage: {
         width: 100,
@@ -83,6 +97,7 @@ const styles = StyleSheet.create({
     },
     leaveOnEdge: {
         flexDirection: 'row',
+        justifyContent:'space-between',
     },
 
 });

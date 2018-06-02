@@ -3,7 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import ShoppingList from './components/ShoppingList';
 import EditItem from './components/EditItem';
 import NewItem from './components/NewItem';
-import Map from './components/Map';
+import SupermarketMap from './components/SupermarketMap';
+import TheCamera from './components/TheCamera';
 import { createStackNavigator } from 'react-navigation'; // Version can be specified in package.json
 
 export default class App extends React.Component {
@@ -16,12 +17,13 @@ export default class App extends React.Component {
 
 const RootStack = createStackNavigator(
   {
-    Home: ShoppingList,
+    ShoppingList: ShoppingList,
     NewItem: NewItem,
-    EidtItem:EditItem,
-    Map: Map,
+    EditItem:EditItem,
+    SupermarketMap: SupermarketMap,
+	  TheCamera: TheCamera,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'ShoppingList',
   }
 );

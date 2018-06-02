@@ -8,12 +8,17 @@ export default class ShoppingList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: []
+            items: [],
+            abc: "123",
         }
     }
     static navigationOptions = {
         title: 'My Shopping List',
     };
+
+    add() {
+        alert('add');
+    }
 
     deleteItem(item) {
         const recordIndex = this.state.items.indexOf(item);
@@ -24,21 +29,32 @@ export default class ShoppingList extends React.Component {
     }
 
     componentDidMount() {
+        this.updateState();
+    }
+
+    updateState(){
         ShoppingAPI.getAllItems().then(
             response => this.setState({
                 items: response.data
             }),
             error => this.setState({
-                error
+                error  //This is the same with error:error
             })
         )
     }
 
     render() {
         const items = this.state.items;
+        const _this = this;
         return (
             <View style={styles.container}>
                 <ScrollView>
+                    {/*<ShoppingItem
+                        imageUri="http://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg"
+                        title="this is title"
+                        content="content"
+                        number="5"
+                    />*/}
                     {items.map((item, i) =>
                         <ShoppingItem
                             navigation={this.props.navigation}
@@ -46,22 +62,26 @@ export default class ShoppingList extends React.Component {
                             item={item}
                             handleEditItem={this.deleteItem.bind(this)}
                             handleDeleteItem={this.deleteItem.bind(this)}
+                            handleUpdateItem={this.updateState.bind(this)}
                         />
                     )}
                 </ScrollView>
-                <View style={styles.addIconWrapper}>
-                    <TouchableHighlight style={styles.addIcon}>
-                        <Icon color="#fff" name='add' onPress={() => {
-                            this.props.navigation.navigate('NewItem');
-                        }} />
-                    </TouchableHighlight>
-                </View>
-                <View style={styles.mapIconWrapper}>
+                <View style={styles.bottomIconsWrapper}>
                     <TouchableHighlight style={styles.mapIcon}>
                         <Icon color="#fff" name='map' onPress={() => {
-                            this.props.navigation.navigate('Map');
+                            this.props.navigation.navigate('SupermarketMap');
                         }} />
                     </TouchableHighlight>
+                    <TouchableHighlight style={styles.addIcon}>
+                        <Icon color="#fff" name='add' onPress={() => {
+                            this.props.navigation.navigate('NewItem', {
+                                refresh: () => {
+                                    this.updateState();
+                                }
+                            });
+                        }} />
+                    </TouchableHighlight>
+
                 </View>
             </View >
         );
@@ -79,12 +99,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 35
     },
-    addIconWrapper: {
+    bottomIconsWrapper: {
         flex: 1,
-        top: -40,
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
-        alignItems: 'center'
+        top: -60,
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        padding: 10,
     },
     addIcon: {
         backgroundColor: '#afafaf',
@@ -93,15 +113,6 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 20
-    },
-
-    mapIconWrapper: {
-        flex: 1,
-        top: -40,
-        alignSelf: 'flex-start',
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     mapIcon: {
         backgroundColor: '#afafaf',
@@ -110,6 +121,5 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 20
     },
 });
