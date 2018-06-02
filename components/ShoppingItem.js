@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     },
     itemImage: {
         width: 100,
-        height: 100
+        height: 100,
+        backgroundColor: '#f7f7f7',
     },
     leaveOnEdge: {
         flexDirection: 'row',

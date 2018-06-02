@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     addIcon: {
-        backgroundColor: '#afafaf',
+        backgroundColor: '#DC4B3E',
         width: 50,
         height: 50,
         borderRadius: 25,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     mapIcon: {
-        backgroundColor: '#afafaf',
+        backgroundColor: '#26afff',
         width: 50,
         height: 50,
         borderRadius: 25,
